@@ -71,7 +71,7 @@ class ReportController extends BaseController
         }
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         $report = $this->reportRepository->getReportById($id);
 

@@ -25,7 +25,6 @@ class BaseController extends Controller
 
     public function __construct()
     {
-        parent::__construct();
         // $this->middleware('auth');
         $this->middleware(function ($request, $next) {
             $this->user = Auth::user();

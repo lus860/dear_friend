@@ -71,7 +71,7 @@ class AffirmationController extends BaseController
         }
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         $affirmation = $this->affirmationRepository->getAffirmationById($id);
 

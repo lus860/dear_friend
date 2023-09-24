@@ -10,17 +10,13 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|confirmed|min:8',
-        ]);
-
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -32,16 +28,14 @@ class AuthController extends Controller
         // Generate token
         $token = $user->createToken('api_token')->plainTextToken;
 
-        return response()->json(['token' => $token], 201);
+        return response()->json([
+            'success' => true,
+            'token' => $token,
+        ], \Illuminate\Http\Response::HTTP_CREATED);
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-        ]);
-
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
@@ -53,7 +47,10 @@ class AuthController extends Controller
         // Generate token
         $token = $user->createToken('api_token')->plainTextToken;
 
-        return response()->json(['token' => $token], 200);
+        return response()->json([
+            'success' => true,
+            'token' => $token,
+        ], \Illuminate\Http\Response::HTTP_OK);
     }
 
     public function redirectToGoogle()

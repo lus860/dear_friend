@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Letter;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class LetterStoreRequest extends FormRequest
 {

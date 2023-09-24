@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Affirmation;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class AffirmationStoreRequest extends FormRequest
 {

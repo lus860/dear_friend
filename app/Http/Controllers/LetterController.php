@@ -71,7 +71,7 @@ class LetterController extends BaseController
         }
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         $letter = $this->letterRepository->getLetterById($id);
 

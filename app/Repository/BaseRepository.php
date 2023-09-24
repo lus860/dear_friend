@@ -7,6 +7,13 @@ use Illuminate\Support\Facades\DB;
 
 abstract class BaseRepository
 {
+    protected $model;
+
+    public function __construct()
+    {
+        $this->model = app($this->getModelClass());
+    }
+
     abstract protected function getModelClass();
 
     protected function startCondition()
