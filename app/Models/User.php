@@ -3,11 +3,14 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Services\CompanyService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use App\Notifications\Auth\ResetPasswordNotification;
+use App\Notifications\Auth\ForgotPasswordNotifications;
 
 class User extends Authenticatable
 {
@@ -59,6 +62,28 @@ class User extends Authenticatable
     // A user belongs to one country (nationality)
     public function country() {
         return $this->belongsTo(Country::class, 'nationality', 'code');
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
+    }
+
+    public static function URL()
+    {
+        if (env('APP_ENV') == 'local') {
+            return self::getPort() . '//' . env('SITE_URL') . 'localhost:3000';
+        }
+        return self::getPort() . '//' . env('SITE_URL');
+    }
+
+    public static function getPort()
+    {
+        $port = 'http';
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') {
+            $port = 'https';
+        }
+        return $port;
     }
 
 }

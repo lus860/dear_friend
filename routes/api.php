@@ -23,8 +23,8 @@ Route::post('/auth/register', [AuthController::class, 'register'])->name('auth.r
 Route::post('/auth/login', [AuthController::class, 'login'])->name('auth.login');
 
 // Google Auth
-Route::post('/auth/redirect', [AuthController::class, 'auth/redirect'])->name('auth.redirect');
-Route::post('/auth/callback', [AuthController::class, 'auth/callback'])->name('auth.callback');
+Route::post('/auth/redirect', [AuthController::class, 'redirectToGoogle'])->name('auth.redirect');
+Route::post('/auth/callback', [AuthController::class, 'handleGoogleCallback'])->name('auth.callback');
 
 // Affirmations
 Route::get('/affirmations', 'AffirmationController@index')->name('affirmations.index');
@@ -46,3 +46,7 @@ Route::post('/reports', 'ReportController@store')->name('reports.store');
 Route::get('/reports/{id}', 'ReportController@show')->name('reports.show');
 Route::put('/reports/{id}', 'ReportController@update')->name('reports.update');
 Route::delete('/reports/{id}', 'ReportController@destroy')->name('reports.destroy');
+
+// Forgot Password
+Route::post('password/email', 'ForgotPasswordController@forgotPassword');
+Route::post('password/reset', 'ForgotPasswordController@reset')->name('password.reset');
