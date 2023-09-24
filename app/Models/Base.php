@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Base extends Model
 {
     use HasFactory;
+
+    public function getFillable()
+    {
+        return $this->fillable;
+    }
+
 }

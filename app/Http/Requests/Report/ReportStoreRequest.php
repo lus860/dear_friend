@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Affirmation;
+namespace App\Http\Requests\Report;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AffirmationStoreRequest extends FormRequest
+class ReportStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,9 @@ class AffirmationStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'author' => 'max:64',
-            'content' => 'required|max:1024',
+            'letter_id' => 'integer|exists:letters,id',
+            'reason' => 'required|max:1024',
         ];
     }
+
 }

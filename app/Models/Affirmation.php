@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Affirmation extends Model
+class Affirmation extends Base
 {
     use HasFactory;
 
@@ -25,10 +25,13 @@ class Affirmation extends Model
 
     public static function updateAffirmation($request, $affirmation)
     {
-        $affirmation->content = $request->content;
+        $fields = $request->only($affirmation->getFillable());
+        $affirmation->fill($fields);
         if ($affirmation->save()) {
             return $affirmation;
         }
+
         return false;
     }
+
 }

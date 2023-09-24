@@ -27,5 +27,6 @@ class LetterRepository extends BaseRepository
     {
         return $this->startCondition()->where('id', $id)->with(['user', 'reports'])->first();
     }
+
 }
 

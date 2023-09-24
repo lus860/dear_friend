@@ -27,5 +27,6 @@ class AffirmationRepository extends BaseRepository
     {
         return $this->startCondition()->where('id', $id)->first();
     }
+
 }
 

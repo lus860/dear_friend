@@ -39,3 +39,10 @@ Route::post('/letters', 'LetterController@store')->name('letters.store');
 Route::get('/letters/{id}', 'LetterController@show')->name('letters.show');
 Route::put('/letters/{id}', 'LetterController@update')->name('letters.update');
 Route::delete('/letters/{id}', 'LetterController@destroy')->name('letters.destroy');
+
+// Letters
+Route::get('/reports', 'ReportController@index')->name('reports.index');
+Route::post('/reports', 'ReportController@store')->name('reports.store');
+Route::get('/reports/{id}', 'ReportController@show')->name('reports.show');
+Route::put('/reports/{id}', 'ReportController@update')->name('reports.update');
+Route::delete('/reports/{id}', 'ReportController@destroy')->name('reports.destroy');

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Affirmation\AffirmationEditRequest;
 use App\Http\Requests\Affirmation\AffirmationStoreRequest;
-use App\Http\Requests\Letter\LetterEditRequest;
 use App\Models\Affirmation;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -40,18 +40,18 @@ class AffirmationController extends BaseController
 
     public function store(AffirmationStoreRequest $request)
     {
-        $letter = Affirmation::createAffirmation($request);
-        if ($letter) {
+        $affirmation = Affirmation::createAffirmation($request);
+        if ($affirmation) {
             return response()->json([
                 'status' => 'success',
-                'data' => $letter,
+                'data' => $affirmation,
             ], Response::HTTP_CREATED);
         }
 
         return self::httpBadRequest(self::SOMETHING_WENT_WRONG);
     }
 
-    public function update(LetterEditRequest $request, $id)
+    public function update(AffirmationEditRequest $request, $id)
     {
         $affirmation = $this->affirmationRepository->getAffirmationById($id);
 
@@ -59,9 +59,9 @@ class AffirmationController extends BaseController
             return self::httpBadRequest(self::NOT_FOUND, Response::HTTP_NOT_FOUND);
         }
 
-        $res = Affirmation::updateAffirmation($request, $affirmation);
+        $affirmation = Affirmation::updateAffirmation($request, $affirmation);
 
-        if ($res) {
+        if ($affirmation) {
             return response()->json([
                 'status' => 'success',
                 'data' => $affirmation->refresh(),

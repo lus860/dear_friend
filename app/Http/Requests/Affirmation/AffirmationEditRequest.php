@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Affirmation;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class AffirmationEditRequest extends FormRequest
 {
@@ -12,6 +13,7 @@ class AffirmationEditRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
+        // return Auth::check();
     }
 
     /**

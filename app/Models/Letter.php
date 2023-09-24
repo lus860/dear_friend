@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Letter extends Model
+class Letter extends Base
 {
     use HasFactory;
 
@@ -40,11 +40,12 @@ class Letter extends Model
 
     public static function updateLetter($request, $letter)
     {
-        $letter->content = $request->content;
-        $letter->moderation_status = $request->moderation_status;
+        $fields = $request->only($letter->getFillable());
+        $letter->fill($fields);
         if ($letter->save()) {
             return $letter;
         }
+
         return false;
     }
 

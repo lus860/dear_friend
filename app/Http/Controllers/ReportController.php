@@ -2,69 +2,69 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Letter;
+use App\Http\Requests\Report\ReportEditRequest;
+use App\Http\Requests\Report\ReportStoreRequest;
+use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Http\Requests\Letter\LetterEditRequest;
-use App\Http\Requests\Letter\LetterStoreRequest;
 
-class LetterController extends BaseController
+class ReportController extends BaseController
 {
     public function index()
     {
-        $letters = $this->letterRepository->getLetters();
+        $reports = $this->reportRepository->getReports();
 
-        if (!$letters) {
+        if (!$reports) {
             return self::httpBadRequest(self::NOT_FOUND, Response::HTTP_NOT_FOUND);
         }
 
         return response()->json([
             'status' => 'success',
-            'data' => $letters,
+            'data' => $reports,
         ], Response::HTTP_OK);
     }
 
     public function show($id)
     {
-        $letter = $this->letterRepository->getLetterById($id);
+        $report = $this->reportRepository->getReportById($id);
 
-        if (!$letter) {
+        if (!$report) {
             return self::httpBadRequest(self::NOT_FOUND, Response::HTTP_NOT_FOUND);
         }
 
         return response()->json([
             'status' => 'success',
-            'data' => $letter,
+            'data' => $report,
         ], Response::HTTP_OK);
     }
 
-    public function store(LetterStoreRequest $request)
+    public function store(ReportStoreRequest $request)
     {
-        $letter = Letter::createLetter($request, $this->user->id);
-        if ($letter) {
+        $report = Report::createReport($request, $this->user->id);
+        if ($report) {
             return response()->json([
                 'status' => 'success',
-                'data' => $letter,
+                'data' => $report,
             ], Response::HTTP_CREATED);
         }
 
         return self::httpBadRequest(self::SOMETHING_WENT_WRONG);
     }
 
-    public function update(LetterEditRequest $request, $id)
+    public function update(ReportEditRequest $request, $id)
     {
-        $letter = $this->letterRepository->getLetterById($id);
+        $report = $this->reportRepository->getReportById($id);
 
-        if (!$letter) {
+        if (!$report) {
             return self::httpBadRequest(self::NOT_FOUND, Response::HTTP_NOT_FOUND);
         }
 
-        $letter = Letter::updateLetter($request, $letter);
+        $report = Report::updateReport($request, $report);
 
-        if ($letter) {
+        if ($report) {
             return response()->json([
                 'status' => 'success',
-                'data' => $letter->refresh(),
+                'data' => $report->refresh(),
             ], Response::HTTP_OK);
         } else {
             return self::httpBadRequest(self::SOMETHING_WENT_WRONG);
@@ -73,12 +73,12 @@ class LetterController extends BaseController
 
     public function delete($id)
     {
-        $letter = $this->letterRepository->getLetterById($id);
+        $report = $this->reportRepository->getReportById($id);
 
-        if (!$letter) {
+        if (!$report) {
             return self::httpBadRequest(self::NOT_FOUND, Response::HTTP_NOT_FOUND);
         }
-        $res = $letter->delete();
+        $res = $report->delete();
 
         if ($res) {
             return response()->json([

@@ -55,4 +55,5 @@ class Role extends OriginalRole
             'auth.logout',
         ];
     }
+
 }

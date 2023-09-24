@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Repository\LetterRepository;
 use App\Repository\AffirmationRepository;
+use App\Repository\ReportRepository;
 use Illuminate\Http\Response;
 
 class BaseController extends Controller
@@ -15,6 +16,7 @@ class BaseController extends Controller
     protected $user;
     protected $letterRepository;
     protected $affirmationRepository;
+    protected $reportRepository;
 
     const PERMISSION_DENIED = 'permission denied';
     const NOT_FOUND = 'not found';
@@ -24,10 +26,11 @@ class BaseController extends Controller
     public function __construct()
     {
         parent::__construct();
-     //   $this->middleware('auth:api');
+        // $this->middleware('auth');
         $this->middleware(function ($request, $next) {
             $this->user = Auth::user();
             $this->letterRepository = new LetterRepository();
+            $this->reportRepository = new ReportRepository();
             $this->affirmationRepository = new AffirmationRepository();
 
             return $next($request);
