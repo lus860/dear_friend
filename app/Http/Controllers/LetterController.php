@@ -41,7 +41,12 @@ class LetterController extends BaseController
     public function store(LetterStoreRequest $request)
     {
         $letter = Letter::createLetter($request, $this->user->id);
+
         if ($letter) {
+            if ($request->hasFile('attachment')) {
+                FileController::saveLetterAttachment($letter, $request->file('attachment'));
+            }
+
             return response()->json([
                 'status' => 'success',
                 'data' => $letter,
@@ -62,6 +67,9 @@ class LetterController extends BaseController
         $letter = Letter::updateLetter($request, $letter);
 
         if ($letter) {
+            if ($request->hasFile('attachment')) {
+                FileController::saveLetterAttachment($letter, $request->file('attachment'));
+            }
             return response()->json([
                 'status' => 'success',
                 'data' => $letter->refresh(),
@@ -81,6 +89,7 @@ class LetterController extends BaseController
         $res = $letter->delete();
 
         if ($res) {
+            FileController::deleteLetterAttachment($letter);
             return response()->json([
                 'status' => 'success',
             ], Response::HTTP_OK);

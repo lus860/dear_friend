@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class Letter extends Base
 {
@@ -42,6 +41,32 @@ class Letter extends Base
     {
         $fields = $request->only($letter->getFillable());
         $letter->fill($fields);
+        if ($letter->save()) {
+            return $letter;
+        }
+
+        return false;
+    }
+
+    public static function updateAttachment($letter, $file = null, $dirPath = null, $filename = null, $name = null)
+    {
+        $letter->file_path = $dirPath . '/' . $filename;
+        $letter->file_size = $file->getSize();
+        $letter->file_type = $file->extension();
+        $letter->file_name = $name;
+        if ($letter->save()) {
+            return $letter;
+        }
+        return false;
+    }
+
+    public static function deleteAttachment($letter)
+    {
+        $letter->file_path = null;
+        $letter->file_size = null;
+        $letter->file_type = null;
+        $letter->file_name = null;
+
         if ($letter->save()) {
             return $letter;
         }
