@@ -173,7 +173,7 @@
                     <tbody>
                     <tr>
                         <td style="padding-bottom: 30px;">
-                            <img src="{{ $message->embed(public_path('/image').'/logo_PSP.png') }}" alt="eleap psp"
+                            <img src="{{ $message->embed(public_path('/image').'/logo.png') }}" alt="dear friend"
                                  width="86" height="28">
                         </td>
                     </tr>

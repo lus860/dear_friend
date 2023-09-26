@@ -20,6 +20,7 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'nationality' => $request->code,
             'password' => Hash::make($request->password),
         ]);
 
@@ -31,6 +32,7 @@ class AuthController extends Controller
         return response()->json([
             'success' => true,
             'token' => $token,
+            'user' => $user,
         ], \Illuminate\Http\Response::HTTP_CREATED);
     }
 
@@ -50,6 +52,7 @@ class AuthController extends Controller
         return response()->json([
             'success' => true,
             'token' => $token,
+            'user' => $user,
         ], \Illuminate\Http\Response::HTTP_OK);
     }
 
@@ -84,6 +87,20 @@ class AuthController extends Controller
         } catch (\Exception $ex) {
             return self::httpBadRequest($ex->getMessage(), $ex->getCode());
         }
+    }
+
+    public function logout()
+    {
+        Auth::guard('web')->logout();
+
+        // Revoke all tokens for the authenticated user
+        Auth::user()->tokens->each(function ($token, $key) {
+            $token->delete();
+        });
+
+        return response()->json([
+            'status' => true,
+        ], \Illuminate\Http\Response::HTTP_OK);
     }
 
     public static function httpBadRequest($error_message, $status = Response::HTTP_BAD_REQUEST)

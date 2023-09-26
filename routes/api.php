@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/auth/register', [AuthController::class, 'register'])->name('auth.register');
 Route::post('/auth/login', [AuthController::class, 'login'])->name('auth.login');
+Route::get('/auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 // Google Auth
 Route::post('/auth/redirect', [AuthController::class, 'redirectToGoogle'])->name('auth.redirect');
@@ -46,6 +47,12 @@ Route::post('/reports', 'ReportController@store')->name('reports.store');
 Route::get('/reports/{id}', 'ReportController@show')->name('reports.show');
 Route::put('/reports/{id}', 'ReportController@update')->name('reports.update');
 Route::delete('/reports/{id}', 'ReportController@destroy')->name('reports.destroy');
+
+// Countries
+Route::get('/countries', 'CountryController@index')->name('countries.index');
+
+// Users
+Route::get('/users_count', 'UserController@getUsersCount')->name('users.count');
 
 // Forgot Password
 Route::post('password/email', 'ForgotPasswordController@forgotPassword');

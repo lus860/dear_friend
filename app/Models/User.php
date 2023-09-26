@@ -3,7 +3,6 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Services\CompanyService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -26,7 +25,7 @@ class User extends Authenticatable
         'email',
         'password',
         'google_id',
-        'country_id',
+        'nationality',
     ];
 
     /**
@@ -57,11 +56,6 @@ class User extends Authenticatable
     // A user can report many letters
     public function reports() {
         return $this->hasMany(Report::class);
-    }
-
-    // A user belongs to one country (nationality)
-    public function country() {
-        return $this->belongsTo(Country::class, 'nationality', 'code');
     }
 
     public function sendPasswordResetNotification($token)
