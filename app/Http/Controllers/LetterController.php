@@ -40,7 +40,9 @@ class LetterController extends BaseController
 
     public function store(LetterStoreRequest $request)
     {
-        $letter = Letter::createLetter($request, $this->user->id);
+        $user = auth()->user();
+
+        $letter = Letter::createLetter($request, $user->id);
 
         if ($letter) {
             if ($request->hasFile('attachment')) {
