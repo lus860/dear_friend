@@ -68,7 +68,7 @@ class User extends Authenticatable
         if (env('APP_ENV') == 'local') {
             return self::getPort() . '//' . env('SITE_URL') . 'localhost:3000';
         }
-        return self::getPort() . '//' . env('SITE_URL');
+        return env('APP_FRONTEND_URL');
     }
 
     public static function getPort()
