@@ -40,7 +40,7 @@ class LetterController extends BaseController
 
     public function store(LetterStoreRequest $request)
     {
-       // $user = auth()->user();
+       $user = auth()->user();
 
         $letter = Letter::createLetter($request, 1);
 
