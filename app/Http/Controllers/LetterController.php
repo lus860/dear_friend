@@ -50,8 +50,6 @@ class LetterController extends BaseController
             return response()->json([
                 'status' => 'success',
                 'data' => $letter,
-                'user' => auth('sanctum')->user(),
-                'user_1' => $request->user(),
             ], Response::HTTP_CREATED);
         }
 
