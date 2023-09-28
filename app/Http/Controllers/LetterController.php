@@ -50,6 +50,7 @@ class LetterController extends BaseController
             return response()->json([
                 'status' => 'success',
                 'data' => $letter,
+                'user' => $this->user,
             ], Response::HTTP_CREATED);
         }
 
