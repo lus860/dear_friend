@@ -53,6 +53,7 @@ class LetterController extends BaseController
                 'status' => 'success',
                 'data' => $letter,
                 'user' => $this->user,
+                'user_1' => $user,
             ], Response::HTTP_CREATED);
         }
 
