@@ -55,5 +55,5 @@ Route::get('/countries', 'CountryController@index')->name('countries.index');
 Route::get('/users_count', 'UserController@getUsersCount')->name('users.count');
 
 // Forgot Password
-Route::post('password/email', 'ForgotPasswordController@forgotPassword');
-Route::post('password/reset', 'ForgotPasswordController@reset')->name('password.reset');
+Route::post('/password/email', 'ForgotPasswordController@forgotPassword');
+Route::post('/password/reset', 'ForgotPasswordController@reset')->name('password.reset');
