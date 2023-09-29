@@ -26,6 +26,7 @@ class Role extends OriginalRole
             'letters.show',
             'letters.update',
             'letters.destroy',
+            'letters.moderation_status.change',
 
             'countries.index',
             'countries.store',

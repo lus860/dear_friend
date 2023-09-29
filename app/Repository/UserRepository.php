@@ -18,14 +18,14 @@ class UserRepository extends BaseRepository
 
    public function getUsers()
    {
-       $query = $this->startCondition()->with(['letters', 'reports'])->orderBy('created_at', 'desc');
+       $query = $this->startCondition()->with(['letters', 'reports', 'roles'])->orderBy('created_at', 'desc');
 
        return $query->paginate(env('PER_PAGE', 21));
    }
 
     public function getUserById($id)
     {
-        return $this->startCondition()->where('id', $id)->with(['letters', 'reports'])->first();
+        return $this->startCondition()->where('id', $id)->with(['letters', 'reports', 'roles'])->first();
     }
 
     public function getUsersCount()

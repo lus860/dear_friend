@@ -19,7 +19,7 @@ class UserController extends BaseController
 
     public function getAuthUser()
     {
-        $user = $this->user;
+        $user = $this->userRepository->getUserById($this->user->id);
 
         return response()->json([
             'status' => 'success',
