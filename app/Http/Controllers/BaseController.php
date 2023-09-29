@@ -23,9 +23,6 @@ class BaseController extends Controller
     const NOT_FOUND = 'not found';
     const NO_DATA = 'no data';
     const SOMETHING_WENT_WRONG = 'something went wrong';
-    const PENDING_STATUS = 'PENDING';
-    const APPROVED_STATUS = 'APPROVED';
-    const REJECTED_STATUS = 'REJECTED';
 
     public function __construct()
     {

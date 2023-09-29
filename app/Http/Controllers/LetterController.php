@@ -19,7 +19,7 @@ class LetterController extends BaseController
             }
             $letters = $this->letterRepository->getLetters($status);
         } else {
-            $status = self::APPROVED_STATUS;
+            $status = Letter::APPROVED_STATUS;
             $letters = $this->letterRepository->getLetters($status, $this->user->id);
         }
 

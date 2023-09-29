@@ -11,6 +11,10 @@ class Letter extends Base
 
     protected $fillable = ['user_id', 'content', 'submission_date', 'moderation_status'];
 
+    const PENDING_STATUS = 'PENDING';
+    const APPROVED_STATUS = 'APPROVED';
+    const REJECTED_STATUS = 'REJECTED';
+
     // A letter belongs to one user
     public function user() {
         return $this->belongsTo(User::class);
@@ -41,6 +45,7 @@ class Letter extends Base
     {
         $fields = $request->only($letter->getFillable());
         $letter->fill($fields);
+        $fields['moderation_status'] = self::PENDING_STATUS;
         if ($letter->save()) {
             return $letter;
         }
