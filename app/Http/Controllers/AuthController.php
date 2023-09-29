@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
+use App\Repository\UserRepository;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
@@ -15,6 +16,13 @@ use App\Http\Requests\Auth\RegisterRequest;
 
 class AuthController extends Controller
 {
+    protected $userRepository;
+
+    public function __construct()
+    {
+        $this->userRepository = new UserRepository();
+    }
+
     public function register(RegisterRequest $request)
     {
         $user = User::create([
@@ -29,6 +37,8 @@ class AuthController extends Controller
         // Generate token
         $token = $user->createToken('api_token')->plainTextToken;
 
+        $user = $this->userRepository->getUserById($user->id);
+
         return response()->json([
             'success' => true,
             'token' => $token,
@@ -38,7 +48,7 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->with(['letters', 'reports', 'roles'])->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
