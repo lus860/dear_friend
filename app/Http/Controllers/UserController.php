@@ -17,4 +17,15 @@ class UserController extends BaseController
         ], Response::HTTP_OK);
     }
 
+    public function getAuthUser()
+    {
+        $user = $this->user;
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $user,
+        ], Response::HTTP_OK);
+    }
+
 }
+

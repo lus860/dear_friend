@@ -53,6 +53,7 @@ Route::get('/countries', 'CountryController@index')->name('countries.index');
 
 // Users
 Route::get('/users_count', 'UserController@getUsersCount')->name('users.count');
+Route::get('/auth_user', 'UserController@getAuthUser')->name('user.auth');
 
 // Forgot Password
 Route::post('/password/email', 'ForgotPasswordController@forgotPassword');
