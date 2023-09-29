@@ -16,12 +16,16 @@ class LetterRepository extends BaseRepository
         return Model::class;
     }
 
-   public function getLetters()
-   {
-       $query = $this->startCondition()->with(['user', 'reports'])->orderBy('created_at', 'desc');
+    public function getLetters($status, $userId)
+    {
+        $query = $this->startCondition()->with(['user', 'reports']);
+        if ($status) {
+            $query->where('moderation_status', $status);
+        }
 
-       return $query->paginate(env('PER_PAGE', 21));
-   }
+        return $query->orWhere('user_id', $userId)->orderBy('created_at', 'desc')
+            ->paginate(env('PER_PAGE', 21));
+    }
 
     public function getLetterById($id)
     {

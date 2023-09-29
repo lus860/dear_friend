@@ -10,9 +10,18 @@ use App\Http\Requests\Letter\LetterStoreRequest;
 
 class LetterController extends BaseController
 {
-    public function index()
+    public function index(Request $request)
     {
-        $letters = $this->letterRepository->getLetters();
+        if ($this->user->hasRole('admin')) {
+            $status = null;
+            if ($request->has('status') && $request->status) {
+                $status = $request->status;
+            }
+            $letters = $this->letterRepository->getLetters($status, $this->user->id);
+        } else {
+            $status = self::APPROVED_STATUS;
+            $letters = $this->letterRepository->getLetters($status, $this->user->id);
+        }
 
         if (!$letters) {
             return self::httpBadRequest(self::NOT_FOUND, Response::HTTP_NOT_FOUND);
