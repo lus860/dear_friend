@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 class ForgotPasswordController extends Controller
 {
     public function forgotPassword(Request $request)
-    {dd(777);
+    {
         $input = $request->all();
         $rules = ['email' => "required|email"];
 
@@ -44,7 +44,7 @@ class ForgotPasswordController extends Controller
     public function reset(ResetPasswordRequest $request)
     {
         info($request);
-        dd($request);
+        dd(555);
         $user = User::where('email', $request->email)->first();
         info($user);
         if ($user && Hash::check($request->password, $user->password)) {
