@@ -44,10 +44,11 @@ class ForgotPasswordController extends Controller
     public function reset(ResetPasswordRequest $request)
     {
         $user = User::where('email', $request->email)->first();
+        info($user);
         if ($user && Hash::check($request->password, $user->password)) {
             return self::httpBadRequest('Please enter a password which is not similar then current password.');
         }
-
+info($request->validated());
         $reset_password_status = Password::reset($request->validated(), function ($user, $password) {
             $user->password = Hash::make($password);
             $user->save();
