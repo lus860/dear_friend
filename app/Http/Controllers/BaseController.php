@@ -21,7 +21,6 @@ class BaseController extends Controller
 
     const PERMISSION_DENIED = 'permission denied';
     const NOT_FOUND = 'not found';
-    const NO_DATA = 'no data';
     const SOMETHING_WENT_WRONG = 'something went wrong';
 
     public function __construct()

@@ -107,4 +107,28 @@ class LetterController extends BaseController
         }
     }
 
+    public function changeStatus(Request $request)
+    {
+        if (!$this->user->hasRole('admin')) {
+            return self::httpBadRequest(self::PERMISSION_DENIED);
+        }
+
+        $letter = $this->letterRepository->getLetterById($request->id);
+
+        if (!$letter) {
+            return self::httpBadRequest(self::NOT_FOUND, Response::HTTP_NOT_FOUND);
+        }
+
+        $letter->moderation_status = $request->status;
+
+        if ($letter->save()) {
+            return response()->json([
+                'status' => 'success',
+                'data' => $letter->refresh(),
+            ], Response::HTTP_OK);
+        } else {
+            return self::httpBadRequest(self::SOMETHING_WENT_WRONG);
+        }
+    }
+
 }

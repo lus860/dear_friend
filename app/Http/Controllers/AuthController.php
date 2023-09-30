@@ -101,8 +101,7 @@ class AuthController extends Controller
 
     public function logout()
     {
-      //  Auth::guard('web')->logout();
-
+        Auth::guard('web')->logout();
         // Revoke all tokens for the authenticated user
         Auth::user()->tokens->each(function ($token, $key) {
             $token->delete();
