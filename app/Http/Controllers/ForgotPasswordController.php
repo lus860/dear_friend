@@ -43,6 +43,7 @@ class ForgotPasswordController extends Controller
 
     public function reset(ResetPasswordRequest $request)
     {
+        info($request);
         $user = User::where('email', $request->email)->first();
         info($user);
         if ($user && Hash::check($request->password, $user->password)) {
