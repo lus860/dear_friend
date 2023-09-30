@@ -50,7 +50,6 @@ class ForgotPasswordController extends Controller
         }
 
         $reset_password_status = Password::reset($request->validated(), function ($user, $password) {
-            dd(888);
             $user->password = Hash::make($password);
             $user->save();
         });
