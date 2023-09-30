@@ -16,7 +16,7 @@ class LetterRepository extends BaseRepository
         return Model::class;
     }
 
-    public function getLetters($status, $userId = null)
+    public function getLetters($status, $request, $userId = null)
     {
         $query = $this->startCondition()->with(['user', 'reports']);
         if ($status) {
@@ -27,8 +27,14 @@ class LetterRepository extends BaseRepository
             $query->orWhere('user_id', $userId);
         }
 
+        $per_page = env('PER_PAGE', 21);
+
+        if ($request->per_page) {
+            $per_page = $request->per_page;
+        }
+
         return $query->orderBy('created_at', 'desc')
-            ->paginate(env('PER_PAGE', 21));
+            ->paginate($per_page);
     }
 
     public function getLetterById($id)

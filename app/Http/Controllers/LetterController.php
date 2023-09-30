@@ -17,10 +17,10 @@ class LetterController extends BaseController
             if ($request->has('status') && $request->status) {
                 $status = $request->status;
             }
-            $letters = $this->letterRepository->getLetters($status);
+            $letters = $this->letterRepository->getLetters($status, $request);
         } else {
             $status = Letter::APPROVED_STATUS;
-            $letters = $this->letterRepository->getLetters($status, $this->user->id);
+            $letters = $this->letterRepository->getLetters($status, $request, $this->user->id);
         }
 
         if (!$letters) {
@@ -73,7 +73,7 @@ class LetterController extends BaseController
             return self::httpBadRequest(self::NOT_FOUND, Response::HTTP_NOT_FOUND);
         }
 
-        $letter = Letter::updateLetter($request, $letter);
+        $letter = Letter::updateLetter($request, $letter, $this->user);
 
         if ($letter) {
             if ($request->hasFile('attachment')) {

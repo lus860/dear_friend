@@ -41,11 +41,13 @@ class Letter extends Base
         return false;
     }
 
-    public static function updateLetter($request, $letter)
+    public static function updateLetter($request, $letter, $user)
     {
         $fields = $request->only($letter->getFillable());
         $letter->fill($fields);
-        $fields['moderation_status'] = self::PENDING_STATUS;
+        if ($user->hasRole('user')) {
+            $fields['moderation_status'] = self::PENDING_STATUS;
+        }
         if ($letter->save()) {
             return $letter;
         }

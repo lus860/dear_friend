@@ -6,6 +6,7 @@ use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
 
@@ -43,12 +44,12 @@ class ForgotPasswordController extends Controller
     public function reset(ResetPasswordRequest $request)
     {
         $user = User::where('email', $request->email)->first();
-        if ($user && $user->password === User::hash($request->password)) {
+        if ($user && Hash::check($request->password, $user->password)) {
             return self::httpBadRequest('Please enter a password which is not similar then current password.');
         }
 
         $reset_password_status = Password::reset($request->validated(), function ($user, $password) {
-            $user->password = User::hash($password);
+            $user->password = Hash::make($password);
             $user->save();
         });
 
