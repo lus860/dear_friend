@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 class ForgotPasswordController extends Controller
 {
     public function forgotPassword(Request $request)
-    {
+    {dd(777);
         $input = $request->all();
         $rules = ['email' => "required|email"];
 
