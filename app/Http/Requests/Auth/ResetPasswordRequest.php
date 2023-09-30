@@ -20,7 +20,7 @@ class ResetPasswordRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {
+    {dd(999);
         return [
             'token' => 'required',
             'email' => 'required|email',
