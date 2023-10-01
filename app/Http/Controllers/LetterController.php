@@ -73,6 +73,10 @@ class LetterController extends BaseController
             return self::httpBadRequest(self::NOT_FOUND, Response::HTTP_NOT_FOUND);
         }
 
+        if (!$this->user->hasRole('admin') && $letter->user_id != $this->user->id) {
+            return self::httpBadRequest(self::PERMISSION_DENIED);
+        }
+
         $letter = Letter::updateLetter($request, $letter, $this->user);
 
         if ($letter) {
@@ -95,6 +99,11 @@ class LetterController extends BaseController
         if (!$letter) {
             return self::httpBadRequest(self::NOT_FOUND, Response::HTTP_NOT_FOUND);
         }
+
+        if (!$this->user->hasRole('admin') && $letter->user_id != $this->user->id) {
+            return self::httpBadRequest(self::PERMISSION_DENIED);
+        }
+
         $res = $letter->delete();
 
         if ($res) {
