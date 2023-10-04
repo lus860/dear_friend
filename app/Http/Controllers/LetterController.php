@@ -104,7 +104,7 @@ class LetterController extends BaseController
             return self::httpBadRequest(self::PERMISSION_DENIED);
         }
 
-        $res = $letter->delete();
+        $res = Letter::where('id', $id)->delete();
 
         if ($res) {
             FileController::deleteLetterAttachment($letter);
