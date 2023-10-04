@@ -9,11 +9,11 @@ class Letter extends Base
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'content', 'submission_date', 'moderation_status'];
-
     const PENDING_STATUS = 'PENDING';
     const APPROVED_STATUS = 'APPROVED';
     const REJECTED_STATUS = 'REJECTED';
+
+    protected $fillable = ['user_id', 'content', 'submission_date', 'moderation_status'];
 
     // A letter belongs to one user
     public function user() {
@@ -45,6 +45,7 @@ class Letter extends Base
     {
         $fields = $request->only($letter->getFillable());
         $letter->fill($fields);
+        info($fields);
         if ($user->hasRole('user')) {
             $fields['moderation_status'] = self::PENDING_STATUS;
         }
