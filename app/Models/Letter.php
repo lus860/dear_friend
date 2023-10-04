@@ -43,8 +43,8 @@ class Letter extends Base
 
     public static function updateLetter($request, $letter, $user)
     {
-        $letter->content = $request->content;
-
+        //$letter->content = $request->content;
+        $letter->moderation_status = self::PENDING_STATUS;
         if ($user->hasRole('user')) {
             $letter->moderation_status = self::PENDING_STATUS;
         }
