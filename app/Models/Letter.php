@@ -29,12 +29,15 @@ class Letter extends Base
         'submission_date' => 'datetime',
     ];
 
-    public static function createLetter($request, $user_id)
+    public static function createLetter($request, $user)
     {
         $letter = new self();
         $letter->content = $request->content;
-        $letter->user_id = $user_id;
+        $letter->user_id = $user->id;
         $letter->submission_date = Carbon::now('UTC');
+        if ($user->hasRole('admin')) {
+            $letter->moderation_status = self::APPROVED_STATUS;
+        }
         if ($letter->save()) {
             return $letter;
         }
