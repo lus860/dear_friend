@@ -38,7 +38,7 @@ Route::delete('/affirmations/{id}', 'AffirmationController@destroy')->name('affi
 Route::get('/letters', 'LetterController@index')->name('letters.index');
 Route::post('/letters', 'LetterController@store')->name('letters.store');
 Route::get('/letters/{id}', 'LetterController@show')->name('letters.show');
-Route::put('/letters/{id}', 'LetterController@update')->name('letters.update');
+Route::post('/letters/update/{id}', 'LetterController@update')->name('letters.update');
 Route::delete('/letters/{id}', 'LetterController@destroy')->name('letters.destroy');
 Route::post('/letters/change_status', 'LetterController@changeStatus')->name('letters.change_status');
 
